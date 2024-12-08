@@ -1,0 +1,90 @@
+---
+import Base from "../layout/Base.astro";
+---
+
+
+<Base>
+<main class=" font-interTight ">
+
+<section class="hero-section relative w-full ">
+<div class=" hero-content relative z-20 flex flex-col gap-8 items-start px-12 pt-56  ">
+	<h1 class="font-semibold text-[85px] leading-[80px] drop-shadow-sm">Helderheid in <br> ieder moment.</h1>
+	<button class="px-5 py-4 rounded-2xl bg-white text-black">Koop vanaf €380</button>
+	<div class="mt-16">
+		<label for="rating" class="flex  bottom-12 gap-2 py-2 px-4 items-center justify-between rounded-2xl bg-transparent backdrop-blur-lg">
+			<div>
+				<svg class=" fill-green-500" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path  d="m12 17.275l-4.15 2.5q-.275.175-.575.15t-.525-.2t-.35-.437t-.05-.588l1.1-4.725L3.775 10.8q-.25-.225-.312-.513t.037-.562t.3-.45t.55-.225l4.85-.425l1.875-4.45q.125-.3.388-.45t.537-.15t.537.15t.388.45l1.875 4.45l4.85.425q.35.05.55.225t.3.45t.038.563t-.313.512l-3.675 3.175l1.1 4.725q.075.325-.05.588t-.35.437t-.525.2t-.575-.15z"/></svg>
+			</div>
+			<div><p class=" font-normal">
+				4.5 | Uitstekend </p></div>
+		</label>
+	</div>
+</div>
+<div class="hero-bg-video absolute z-10 inset-0 w-full h-[1896px] bg-gray-800">
+	<div class="media-object  sticky top-0 h-screen border border-red-500 w-full">
+		<div class="w-full h-full absolute inset-0 bg-black z-10 opacity-0"></div>
+		<video class="w-full h-full absolute inset-0  object-cover" muted autoplay src="/bg-video/intro-video-new.mp4"></video>
+	</div>
+</div>
+</section>
+
+<section class="section-two w-full relative z-40">
+	<div class="details flex flex-col gap-24 px-12 py-12">
+        <h2  class="detail detail-1">
+			Geen weken wachten. Razendsnel in huis.
+        </h2>
+        <h2  class="detail detail-2">
+			Glashelder design, gebouwd voor de lange termijn.
+        </h2>
+        <h2  class="detail detail-3">
+			5 jaar garantie. Gemoedsrust, inbegrepen.
+        </h2>
+        <h2  class="detail detail-4">
+          App pré-installée sur iPhone, iPad, Mac et Apple TV.
+        </h2>
+        <h2  class="detail detail-5">
+			Geen compromissen, enkel het allerbeste.
+        </h2>
+        <div
+          
+          class="detail detail-6 w-full h-[260px] flex justify-evenly items-center gap-2 p-2 bg-neutral-900 rounded-3xl"
+        >
+          <div class="flex-1 h-full bg-neutral-800 rounded-2xl"></div>
+          <div class="flex-1 h-full bg-neutral-800 rounded-2xl"></div>
+          <div class="flex-1 h-full bg-neutral-800 rounded-2xl"></div>
+        </div>
+      </div>
+</section>
+
+<section class=" border border-green-600 w-full">
+	<div class=" h-[1896px] w-full relative">
+		<div class=" h-screen sticky top-0 bg-neutral-700  flex justify-center items-start">
+			<p class="text-white font-bold">GG</p>
+		</div>
+	</div>
+</section>
+<section class="h-screen bg-red-500 w-full flex justify-center items-center">
+	<p>we have arrived</p>
+</section>
+
+</main>
+
+</Base>
+
+<style>
+	
+	h2 {
+  @apply text-[40px] font-semibold text-white leading-tight ;
+}
+
+</style>
+
+<script  >
+	import {gsap} from "gsap" 
+	import { ScrollTrigger } from 'gsap/ScrollTrigger';
+ 
+	
+
+
+	
+</script>
