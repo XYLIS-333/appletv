@@ -7,7 +7,7 @@ import Base from "../layout/Base.astro";
 <main class=" font-interTight ">
 
 <section class="hero-section relative w-full ">
-<div class=" hero-content relative z-20 flex flex-col gap-8 items-start px-12 pt-56  ">
+<div class=" hero-content  relative z-20 flex flex-col gap-8 items-start px-32 pt-56  ">
 	<h1 class="font-semibold text-[85px] leading-[80px] drop-shadow-sm">Helderheid in <br> ieder moment.</h1>
 	<button class="px-5 py-4 rounded-2xl bg-white text-black">Koop vanaf €380</button>
 	<div class="mt-16">
@@ -20,16 +20,16 @@ import Base from "../layout/Base.astro";
 		</label>
 	</div>
 </div>
-<div class="hero-bg-video absolute z-10 inset-0 w-full h-[1896px] bg-gray-800">
-	<div class="media-object  sticky top-0 h-screen border border-red-500 w-full">
-		<div class="w-full h-full absolute inset-0 bg-black z-10 opacity-0"></div>
-		<video class="w-full h-full absolute inset-0  object-cover" muted autoplay src="/bg-video/intro-video-new.mp4"></video>
+<div class="hero-bg-video absolute z-10 inset-0 w-full h-[2900px] bg-gray-800 md:h-[2500px] lg:h-[2096px] xl:h-[2100px]">
+	<div class="media-object  sticky top-0 h-screen   w-full">
+		<div class="w-full video-cover absolute inset-0 bg-black z-10 opacity-0"></div>
+		<video class="w-full h-full product-video   absolute inset-0  object-cover" muted autoplay src="/bg-video/intro-video-new.mp4"></video>
 	</div>
 </div>
 </section>
 
-<section class="section-two w-full relative z-40">
-	<div class="details flex flex-col gap-24 px-12 py-12">
+<section class="section-two w-full relative z-40 mt-32">
+	<div class="details flex flex-col gap-24 px-32 py-12">
         <h2  class="detail detail-1">
 			Geen weken wachten. Razendsnel in huis.
         </h2>
@@ -56,11 +56,29 @@ import Base from "../layout/Base.astro";
       </div>
 </section>
 
-<section class=" border border-green-600 w-full">
-	<div class=" h-[1896px] w-full relative">
-		<div class=" h-screen sticky top-0 bg-neutral-700  flex justify-center items-start">
-			<p class="text-white font-bold">GG</p>
+<section class="  w-full">
+	<div class=" h-[2600px] mt-[-100vh] w-full relative md:h-[2500px] lg:h-[2096px] xl:h-[2100px] ">
+		<div class=" sticky top-0 w-full h-screen ">
+			<div class="swiper-wrapper absolute top-[50%] left-0 h-[506px] translate-y-[-50%] w-full overflow-hidden  ">
+				<swiper-container centered-slides="true" 
+				loop="true" 
+				slides-per-view="1.5" 
+				initial-slide="0" 
+				space-between="20" 
+				class=" h-full"
+				>
+					<swiper-slide class=" h-full rounded-3xl overflow-hidden"> <img class=" object-cover w-full h-full" src="/slides/two.avif" alt=""></swiper-slide>
+					<swiper-slide class=" h-full rounded-3xl overflow-hidden"> <img class="w-full h-full object-cover" src="/slides/one.avif" alt=""></swiper-slide>
+					<swiper-slide class=" h-full rounded-3xl overflow-hidden"> <img class="w-full h-full object-cover" src="/slides/three.avif" alt=""></swiper-slide>
+					<swiper-slide class=" h-full rounded-3xl overflow-hidden"> <img class="w-full h-full object-cover" src="/slides/four.avif" alt=""></swiper-slide>
+					<swiper-slide class=" h-full rounded-3xl overflow-hidden"> <img class="w-full h-full object-cover" src="/slides/five.avif" alt=""></swiper-slide>
+				  </swiper-container>
+			</div>
+
 		</div>
+	</div>
+	<div class="marquee w-full bg-neutral-800 h-[400px] flex justify-center items-center">
+<p>Section for marquee</p>
 	</div>
 </section>
 <section class="h-screen bg-red-500 w-full flex justify-center items-center">
@@ -72,19 +90,70 @@ import Base from "../layout/Base.astro";
 </Base>
 
 <style>
+
+	.detail{
+		opacity:0;
+		transform: translateY(40px)
+	}
 	
 	h2 {
-  @apply text-[40px] font-semibold text-white leading-tight ;
+  @apply text-[50px] font-semibold text-white leading-tight ;
 }
+
 
 </style>
 
-<script  >
-	import {gsap} from "gsap" 
-	import { ScrollTrigger } from 'gsap/ScrollTrigger';
- 
+  <script  >
 	
+  	import {gsap} from "gsap" 
+  	import { ScrollTrigger } from 'gsap/ScrollTrigger';
+	// import function to register Swiper custom elements
+    import { register } from 'swiper/element/bundle';
+    // register Swiper custom elements
+    register();
+   
+  	gsap.registerPlugin(ScrollTrigger)
+  	
+  	let tl = gsap.timeline({
+  		scrollTrigger:{
+  		trigger:'.hero-section',
+  		start:'top top',
+  		end: '+=600',
+  		scrub:true
+  	}
+  	})
+  
+    tl.to('.hero-content',{
+  	opacity:0,
+  	
+    })
+   tl.to('.video-cover',{opacity:1})
+   tl.set('.product-video',{opacity:0})
+  
 
+  
+   document.querySelectorAll('.detail').forEach((element,i)=>{
+        gsap.to(element,{
+              opacity:1,
+              y:0,
+              duration:0.3,
+	          ease:'none',
+      scrollTrigger:{
+      	trigger:element,
+      	start:'top 90%',
+      	toggleActions:'play none none reverse'
+      
+      
+      }
+      })
+      
+      
+      })
+
+
+	  const activeSlide = document.querySelector('swiper-slide.swiper-slide-active')
+	  console.log(activeSlide);
+	  
 
 	
 </script>
