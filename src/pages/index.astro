@@ -6,13 +6,13 @@ import Base from "../layout/Base.astro";
 <Base>
 <main class=" font-interTight ">
 
-<section class="hero-section relative w-full ">
-<div class=" hero-content min-h-screen h-screen  relative z-20 flex flex-col gap-8 items-start px-32 pt-56  ">
-	<h1 class="font-semibold text-[85px] leading-[80px] drop-shadow-sm">Helderheid in <br> ieder moment.</h1>
-	<div class="flex gap-3 justify-start items-center">
+<section class="hero-section relative w-full  ">
+<div class=" hero-content min-h-screen h-screen  w-full  relative z-20 flex flex-col gap-8 xs:gap-12 items-start px-32 pt-56 overflow-hidden xs:px-6  ">
+	<h1 class="font-semibold text-[85px] leading-[80px] drop-shadow-sm xs:text-[50px] xs:leading-[50px]">Helderheid in <br> ieder moment.</h1>
+	<div class="flex xs:flex-col xs:items-start xs:justify-center gap-3 justify-start items-center">
 		<button class="px-5 py-4 rounded-2xl bg-white text-black">Koop vanaf €380</button>
 		<div>
-			<label for="rating" class="flex  bottom-12 gap-2 py-2 px-4 items-center justify-between rounded-2xl ">
+			<label for="rating" class="flex  bottom-12 gap-2 py-2  items-center justify-between rounded-2xl ">
 				<div>
 					<svg class=" fill-green-500" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path  d="m12 17.275l-4.15 2.5q-.275.175-.575.15t-.525-.2t-.35-.437t-.05-.588l1.1-4.725L3.775 10.8q-.25-.225-.312-.513t.037-.562t.3-.45t.55-.225l4.85-.425l1.875-4.45q.125-.3.388-.45t.537-.15t.537.15t.388.45l1.875 4.45l4.85.425q.35.05.55.225t.3.45t.038.563t-.313.512l-3.675 3.175l1.1 4.725q.075.325-.05.588t-.35.437t-.525.2t-.575-.15z"/></svg>
 				</div>
@@ -22,7 +22,7 @@ import Base from "../layout/Base.astro";
 		</div>
 	</div>
 </div>
-<div class="hero-bg-video absolute z-10 inset-0 w-full h-[2096px] ">
+<div class="hero-bg-video absolute z-10  inset-0  h-[2096px] ">
 	<div class="media-object  sticky top-0 h-screen w-full">
 		<div class="w-full video-cover absolute inset-0 bg-black z-10 opacity-0"></div>
 		<video class="w-full h-full product-video   absolute inset-0  object-cover" muted autoplay src="/bg-video/intro-video-new.mp4"></video>
@@ -31,20 +31,20 @@ import Base from "../layout/Base.astro";
 </section>
 
 <section class="section-two w-full relative z-40 mt-32">
-	<div class="details flex flex-col gap-24 px-32 py-12">
-        <h2  class="detail detail-1">
+	<div class="details flex flex-col gap-24 xs:gap-12 px-32 py-12 xs:px-12 ">
+        <h2  class="detail detail-1 text-[50px] font-semibold text-white leading-tight xs:text-[25px]">
 			Geen weken wachten. Razendsnel in huis.
         </h2>
-        <h2  class="detail detail-2">
+        <h2  class="detail detail-2 text-[50px] font-semibold text-white leading-tight xs:text-[25px]">
 			Glashelder design, gebouwd voor de lange termijn.
         </h2>
-        <h2  class="detail detail-3">
+        <h2  class="detail detail-3 text-[50px] font-semibold text-white leading-tight xs:text-[25px]">
 			5 jaar garantie. Gemoedsrust, inbegrepen.
         </h2>
-        <h2  class="detail detail-4">
+        <h2  class="detail detail-4 text-[50px] font-semibold text-white leading-tight xs:text-[25px]">
           App pré-installée sur iPhone, iPad, Mac et Apple TV.
         </h2>
-        <h2  class="detail detail-5">
+        <h2  class="detail detail-5 text-[50px] font-semibold text-white leading-tight xs:text-[25px]">
 			Geen compromissen, enkel het allerbeste.
         </h2>
         <div
@@ -98,9 +98,6 @@ import Base from "../layout/Base.astro";
 		transform: translateY(40px)
 	}
 	
-	h2 {
-  @apply text-[50px] font-semibold text-white leading-tight ;
-}
 
 
 </style>
@@ -132,8 +129,7 @@ import Base from "../layout/Base.astro";
 	}
  
 
-	window.addEventListener('resize', setHeight
-);
+	window.addEventListener('resize', setHeight);
 	
      setHeight()
 	
