@@ -80,9 +80,27 @@ import Base from "../layout/Base.astro";
 
 		</div>
 	</div>
-	<div class="marquee-wrapper   w-full bg-neutral-800 py-4 flex justify-center items-center">
+	<div class="marquee-wrapper w-full bg-neutral-800 py-4 flex flex-col gap-8 justify-center items-center">
        <div class="marquee-inner-1 relative flex gap-3 overflow-hidden w-full">
-		 <div class="marquee-1 flex gap-3 justify-evenly items-center min-w-full">
+		 <div class="marquee-1 flex gap-3 justify-evenly items-center ">
+<div class="marquee-item"></div>
+<div class="marquee-item"></div>
+<div class="marquee-item"></div>
+<div class="marquee-item"></div>
+<div class="marquee-item"></div>
+<div class="marquee-item"></div>
+<div class="marquee-item"></div>
+<div class="marquee-item"></div>
+<div class="marquee-item"></div>
+
+		 </div>	
+	   </div>
+       <div class="marquee-inner-2 relative flex flex-row-reverse gap-3 overflow-hidden w-full">
+		 <div class="marquee-2 flex gap-3 justify-evenly items-center ">
+<div class="marquee-item"></div>
+<div class="marquee-item"></div>
+<div class="marquee-item"></div>
+<div class="marquee-item"></div>
 <div class="marquee-item"></div>
 <div class="marquee-item"></div>
 <div class="marquee-item"></div>
@@ -297,11 +315,14 @@ const swiper = new Swiper('.swiper', {
 	 })
 	
 let tween
+let tween_two
 
-function playMarquee(){
-let progress = tween ? tween.progress() : 0
-tween && tween.progress(0).kill()
-const marqueeInnerOne = document.querySelector(".marquee-inner-1") as HTMLElement
+
+function createMarqueeInstance(anim,marqueeinner,direction,speed){
+
+let progress = anim ? anim.progress() : 0
+anim && anim.progress(0).kill()
+const marqueeInnerOne = marqueeinner
 
 const marqueeOne = marqueeInnerOne.children[0];
 const marqueeOneClone  = marqueeOne?.cloneNode(true)
@@ -310,11 +331,19 @@ marqueeInnerOne.append(marqueeOneClone)
 const marqueeWidth = parseInt(getComputedStyle(marqueeOne).getPropertyValue("width"),10)
 const marqueeGap = parseInt(getComputedStyle(marqueeOne).getPropertyValue("column-gap"),10)
 
-const distanceToTranslate = -1 * (marqueeWidth+marqueeGap)
+const distanceToTranslate = direction * (marqueeWidth+marqueeGap)
 
 
-tween =  gsap.fromTo(marqueeInnerOne.children,{x:0},{x:distanceToTranslate,duration:2,ease:"none",repeat:-1})
-tween.progress(progress)
+anim =  gsap.fromTo(marqueeInnerOne.children,{x:0},{x:distanceToTranslate,duration:speed,ease:"none",repeat:-1})
+anim.progress(progress)
+
+}
+const marqueeInnerOne = document.querySelector(".marquee-inner-1") 
+const marqueeInnerTwo = document.querySelector(".marquee-inner-2") 
+
+function playMarquee(){
+createMarqueeInstance(tween,marqueeInnerOne,-1,8)
+ createMarqueeInstance(tween_two,marqueeInnerTwo,1,8)
 }
 
 
