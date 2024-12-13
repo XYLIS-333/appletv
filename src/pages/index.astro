@@ -1,3 +1,4 @@
+
 ---
 import Base from "../layout/Base.astro";
 ---
@@ -79,8 +80,17 @@ import Base from "../layout/Base.astro";
 
 		</div>
 	</div>
-	<div class="marquee w-full bg-neutral-800 h-[400px] flex justify-center items-center">
-       <p>Section for marquee</p>
+	<div class="marquee-wrapper   w-full bg-neutral-800 py-4 flex justify-center items-center">
+       <div class="marquee-inner-1 relative flex gap-3 overflow-hidden w-full">
+		 <div class="marquee-1 flex gap-3 justify-evenly items-center min-w-full">
+<div class="marquee-item"></div>
+<div class="marquee-item"></div>
+<div class="marquee-item"></div>
+<div class="marquee-item"></div>
+<div class="marquee-item"></div>
+
+		 </div>	
+	   </div>
 	</div>
 </section>
 <section class="h-screen bg-red-500 w-full flex justify-center items-center">
@@ -92,6 +102,9 @@ import Base from "../layout/Base.astro";
 </Base>
 
 <style>
+	.marquee-item{
+@apply rounded-2xl w-[320px] h-[200px] bg-blue-400
+	}
 
 	.detail{
 		opacity:0;
@@ -115,6 +128,7 @@ import Base from "../layout/Base.astro";
 </style>
 
   <script  >
+	// @ts-nocheck
 	import Swiper from 'swiper';
 	import 'swiper/css';
   	import {gsap} from "gsap" 
@@ -122,6 +136,7 @@ import Base from "../layout/Base.astro";
 	// import function to register Swiper custom elements
     import { register, type SwiperContainer } from 'swiper/element/bundle';
 import type { SwiperModule } from 'swiper/types';
+import { tweened } from 'svelte/motion';
     // register Swiper custom elements
     register();
    
@@ -134,8 +149,8 @@ import type { SwiperModule } from 'swiper/types';
 	let sectionTwo = document.querySelector('.section-two') as HTMLElement
 	let slideNextButton = document.querySelector('.swiper-button-next')
 	let slidePrevButton = document.querySelector('.swiper-button-prev')
-let inactiveSlides:HTMLElement[] = []
-let swiperTl:GSAPTimeline
+    let inactiveSlides:HTMLElement[] = []
+    let swiperTl:GSAPTimeline
 
 
 function createInstance(targets:[]){
@@ -281,6 +296,37 @@ const swiper = new Swiper('.swiper', {
 		}
 	 })
 	
+let tween
 
+function playMarquee(){
+let progress = tween ? tween.progress() : 0
+tween && tween.progress(0).kill()
+const marqueeInnerOne = document.querySelector(".marquee-inner-1") as HTMLElement
+
+const marqueeOne = marqueeInnerOne.children[0];
+const marqueeOneClone  = marqueeOne?.cloneNode(true)
+marqueeInnerOne.append(marqueeOneClone)
+
+const marqueeWidth = parseInt(getComputedStyle(marqueeOne).getPropertyValue("width"),10)
+const marqueeGap = parseInt(getComputedStyle(marqueeOne).getPropertyValue("column-gap"),10)
+
+const distanceToTranslate = -1 * (marqueeWidth+marqueeGap)
+
+
+tween =  gsap.fromTo(marqueeInnerOne.children,{x:0},{x:distanceToTranslate,duration:2,ease:"none",repeat:-1})
+tween.progress(progress)
+}
+
+
+window.addEventListener('resize',debounce(playMarquee))
+playMarquee()
+
+function debounce(func){
+let timer;
+return function(event){
+	if(timer) clearTimeout(timer);
+	timer = setTimeout(()=>{func()},200,event)
+}
+}
 	
 </script>
