@@ -5,14 +5,14 @@ import Base from "../layout/Base.astro";
 
 <Base>
 <main class=" font-interTight ">
-
+<button class=" fixed top-0 left-0 bg-black text-white z-40 buttonc">create instance</button>
 <section class="hero-section relative w-full  ">
 <div class=" hero-content min-h-screen h-screen  w-full  relative z-20 flex flex-col gap-8 xs:gap-12 items-start px-32 pt-56 overflow-hidden xs:px-6  ">
 	<h1 class="font-semibold text-[85px] leading-[80px] drop-shadow-sm xs:text-[50px] xs:leading-[50px]">Helderheid in <br> ieder moment.</h1>
 	<div class="flex xs:flex-col xs:items-start xs:justify-center gap-3 justify-start items-center">
 		<button class="px-5 py-4 rounded-2xl bg-white text-black">Koop vanaf €380</button>
 		<div>
-			<label for="rating" class="flex  bottom-12 gap-2 py-2  items-center justify-between rounded-2xl ">
+			<label for="rating" class="flex  gap-2 py-2  items-center justify-between rounded-2xl ">
 				<div>
 					<svg class=" fill-green-500" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path  d="m12 17.275l-4.15 2.5q-.275.175-.575.15t-.525-.2t-.35-.437t-.05-.588l1.1-4.725L3.775 10.8q-.25-.225-.312-.513t.037-.562t.3-.45t.55-.225l4.85-.425l1.875-4.45q.125-.3.388-.45t.537-.15t.537.15t.388.45l1.875 4.45l4.85.425q.35.05.55.225t.3.45t.038.563t-.313.512l-3.675 3.175l1.1 4.725q.075.325-.05.588t-.35.437t-.525.2t-.575-.15z"/></svg>
 				</div>
@@ -60,27 +60,27 @@ import Base from "../layout/Base.astro";
 
 <section class=" w-full">
 	<div class=" slider-sticky-wrapper h-[1896px] mt-[-100vh] w-full relative ">
-		<div class=" sticky top-0 w-full h-screen ">
-			<div class="swiper-sticky-wrapper absolute top-[50%] left-0 h-[506px] translate-y-[-50%] w-full overflow-hidden  ">
-				<swiper-container centered-slides="true" 
-				loop="true" 
-				slides-per-view="1.5" 
-				initial-slide="0" 
-				space-between="20" 
-				class=" h-full"
-				>
-					<swiper-slide class=" h-full rounded-3xl overflow-hidden"> <img class=" object-cover w-full h-full" src="/slides/two.avif" alt=""></swiper-slide>
-					<swiper-slide class=" h-full rounded-3xl overflow-hidden"> <img class="w-full h-full object-cover" src="/slides/one.avif" alt=""></swiper-slide>
-					<swiper-slide class=" h-full rounded-3xl overflow-hidden"> <img class="w-full h-full object-cover" src="/slides/three.avif" alt=""></swiper-slide>
-					<swiper-slide class=" h-full rounded-3xl overflow-hidden"> <img class="w-full h-full object-cover" src="/slides/four.avif" alt=""></swiper-slide>
-					<swiper-slide class=" h-full rounded-3xl overflow-hidden"> <img class="w-full h-full object-cover" src="/slides/five.avif" alt=""></swiper-slide>
-				  </swiper-container>
+		<div class=" sticky top-0 w-full h-screen overflow-hidden ">
+			<div class="swiper-sticky-wrapper absolute top-[50%] left-0 h-[506px] translate-y-[-50%] w-full    ">
+				<div class="swiper w-full h-full relative">
+					<!-- Additional required wrapper -->
+					<div class="swiper-wrapper h-full">
+					  <!-- Slides -->
+					  <div class="swiper-slide slide-1 h-full rounded-3xl overflow-hidden"><img class=" object-cover w-full h-full" src="/slides/two.avif" alt=""></div>
+					  <div class="swiper-slide slide-2 h-full rounded-3xl overflow-hidden"><img class="w-full h-full object-cover" src="/slides/one.avif" alt=""></div>
+					  <div class="swiper-slide slide-3 h-full rounded-3xl overflow-hidden"><img class="w-full h-full object-cover" src="/slides/three.avif" alt=""></div>
+					  <div class="swiper-slide slide-4 h-full rounded-3xl overflow-hidden"><img class="w-full h-full object-cover" src="/slides/four.avif" alt=""></div>
+					
+					</div>
+					<div class="swiper-button-prev absolute top-[50%] translate-y-[-50%] bg-slate-950 w-24 h-24 left-4 z-50  rounded-3xl"></div>
+                    <div class="swiper-button-next absolute top-[50%] translate-y-[-50%] bg-slate-950 w-24 h-24 right-4 z-50 rounded-3xl"></div>
+				</div>
 			</div>
 
 		</div>
 	</div>
 	<div class="marquee w-full bg-neutral-800 h-[400px] flex justify-center items-center">
-<p>Section for marquee</p>
+       <p>Section for marquee</p>
 	</div>
 </section>
 <section class="h-screen bg-red-500 w-full flex justify-center items-center">
@@ -98,16 +98,30 @@ import Base from "../layout/Base.astro";
 		transform: translateY(40px)
 	}
 	
+	.swiper{
+		scale:3
+	}
 
 
+	
+	.swiper-button-prev{
+		opacity:0;
+		
+	}
+	.swiper-button-next{
+		opacity:0;
+		
+	}
 </style>
 
   <script  >
-	
+	import Swiper from 'swiper';
+	import 'swiper/css';
   	import {gsap} from "gsap" 
   	import { ScrollTrigger } from 'gsap/ScrollTrigger';
 	// import function to register Swiper custom elements
-    import { register } from 'swiper/element/bundle';
+    import { register, type SwiperContainer } from 'swiper/element/bundle';
+import type { SwiperModule } from 'swiper/types';
     // register Swiper custom elements
     register();
    
@@ -118,6 +132,74 @@ import Base from "../layout/Base.astro";
 	let sliderStickyWrapper = document.querySelector('.slider-sticky-wrapper') as HTMLElement
 	let sectionOne = document.querySelector('.hero-section') as HTMLElement
 	let sectionTwo = document.querySelector('.section-two') as HTMLElement
+	let slideNextButton = document.querySelector('.swiper-button-next')
+	let slidePrevButton = document.querySelector('.swiper-button-prev')
+let inactiveSlides:HTMLElement[] = []
+let swiperTl:GSAPTimeline
+
+
+function createInstance(targets:[]){
+gsap.to(targets,{
+
+})
+} 
+
+
+const swiper = new Swiper('.swiper', {
+  centeredSlides: true,
+  slidesPerView: 1.5,
+  loop: true,
+  spaceBetween: 20,
+  navigation: {
+    nextEl: ".swiper-button-next",
+    prevEl: ".swiper-button-prev",
+  },
+  on: {
+    slideChangeTransitionEnd: function () {
+      // Clear the inactiveSlides array
+      inactiveSlides = [];
+
+      // Populate inactiveSlides with non-active slides
+      this.slides.forEach((slide, i) => {
+        if (i !== this.activeIndex) {
+          inactiveSlides.push(slide);
+        }
+      });
+
+    swiperTl.clear()
+	
+
+	 
+    
+    },
+    init: function () {
+      // Populate inactiveSlides on initialization
+      this.slides.forEach((slide, i) => {
+        if (i !== this.activeIndex) {
+          inactiveSlides.push(slide);
+        }
+      });
+       gsap.set(inactiveSlides,{opacity:0})
+	  swiperTl = gsap.timeline({
+		scrollTrigger:{
+			trigger:".hero-bg-video",
+			start:"bottom 10%",
+			toggleActions:'play none none reverse',
+		
+		}
+	  })
+
+	  swiperTl.to(inactiveSlides,{opacity:1})
+
+      console.log("Initial inactive slides:", inactiveSlides);
+
+     
+    },
+  },
+});
+
+  
+
 
 
 	function setHeight(){
@@ -174,9 +256,31 @@ import Base from "../layout/Base.astro";
       })
 
 
-	  const activeSlide = document.querySelector('swiper-slide.swiper-slide-active')
-	 
 	  
+
+	 gsap.to(".swiper",{scale:1,
+
+		scrollTrigger:{
+			trigger:".hero-bg-video",
+			start:"bottom 70%",
+            end:"bottom top",
+			scrub:true,
+			toggleActions:'play none none reverse',
+		
+		}
+	 })
+
+
+	 
+	 gsap.to(".swiper-button-prev,.swiper-button-next",{opacity:1,
+		scrollTrigger:{
+			trigger:".hero-bg-video",
+			start:"bottom 10%",
+			toggleActions:'play none none reverse',
+		
+		}
+	 })
+	
 
 	
 </script>
