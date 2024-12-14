@@ -6,11 +6,22 @@ import Base from "../layout/Base.astro";
 
 <Base>
 <main class=" font-interTight ">
-<button class=" fixed top-0 left-0 bg-black text-white z-40 buttonc">create instance</button>
+	<div class="fixed opacity-0 transition-all bottom-4 right-4  w-20 h-20 video-controls cursor-pointer z-30">
+		<svg class=" opacity-0 absolute top-1/2 translate-y-[-50%] left-1/2 translate-x-[-50%] play-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="#ffff" d="M8 17.175V6.825q0-.425.3-.713t.7-.287q.125 0 .263.037t.262.113l8.15 5.175q.225.15.338.375t.112.475t-.112.475t-.338.375l-8.15 5.175q-.125.075-.262.113T9 18.175q-.4 0-.7-.288t-.3-.712"/></svg>
+
+		<svg class="opacity-100 absolute top-1/2 translate-y-[-50%] left-1/2 translate-x-[-50%] pause-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="#ffff" d="M14 18V6h3.5v12zm-7.5 0V6H10v12z"/></svg>
+		
+		<svg class=" pointer-events-none" viewBox="0 0 100 100">
+			
+			<circle id="progress-circle" stroke="#ffff" stroke-width="3" cx="50" cy="50" r="30" fill="none" pathLength="100"/>
+			
+		  </svg>
+	</div>
 <section class="hero-section relative w-full  ">
 <div class=" hero-content min-h-screen h-screen  w-full  relative z-20 flex flex-col gap-8 xs:gap-12 items-start px-32 pt-56 overflow-hidden xs:px-6  ">
 	<h1 class="font-semibold text-[85px] leading-[80px] drop-shadow-sm xs:text-[50px] xs:leading-[50px]">Helderheid in <br> ieder moment.</h1>
 	<div class="flex xs:flex-col xs:items-start xs:justify-center gap-3 justify-start items-center">
+		
 		<button class="px-5 py-4 rounded-2xl bg-white text-black">Koop vanaf €380</button>
 		<div>
 			<label for="rating" class="flex  gap-2 py-2  items-center justify-between rounded-2xl ">
@@ -25,8 +36,9 @@ import Base from "../layout/Base.astro";
 </div>
 <div class="hero-bg-video absolute z-10  inset-0  h-[2096px] ">
 	<div class="media-object  sticky top-0 h-screen w-full">
-		<div class="w-full video-cover absolute inset-0 bg-black z-10 opacity-0"></div>
-		<video class="w-full h-full product-video   absolute inset-0  object-cover" muted autoplay src="/bg-video/intro-video-new.mp4"></video>
+		
+		<div class="w-full video-cover absolute inset-0 bg-black z-10 opacity-0 pointer-events-none"></div>
+		<video class="w-full h-full product-video absolute inset-0  object-cover" muted autoplay loop src="/bg-video/intro-video-new.mp4"></video>
 	</div>
 </div>
 </section>
@@ -143,10 +155,16 @@ import Base from "../layout/Base.astro";
 		opacity:0;
 		
 	}
+
+	#progress-circle{
+		stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  stroke-linecap: round;
+	}
 </style>
 
   <script  >
-	// @ts-nocheck
+	//@ts-nocheck
 	import Swiper from 'swiper';
 	import 'swiper/css';
   	import {gsap} from "gsap" 
@@ -155,10 +173,17 @@ import Base from "../layout/Base.astro";
     import { register, type SwiperContainer } from 'swiper/element/bundle';
 import type { SwiperModule } from 'swiper/types';
 import { tweened } from 'svelte/motion';
+
     // register Swiper custom elements
     register();
    
   	gsap.registerPlugin(ScrollTrigger)
+
+	document.addEventListener("click",(e)=>{
+		console.log(e.target);
+		
+	})
+	
 
 
 	let stickyWrapper = document.querySelector('.hero-bg-video') as HTMLElement
@@ -314,11 +339,11 @@ const swiper = new Swiper('.swiper', {
 		}
 	 })
 	
-let tween
-let tween_two
+let tween:GSAPTween
+let tween_two:GSAPTween
 
 
-function createMarqueeInstance(anim,marqueeinner,direction,speed){
+function createMarqueeInstance(anim:GSAPTween,marqueeinner:HTMLElement,direction:number,speed:number){
 
 let progress = anim ? anim.progress() : 0
 anim && anim.progress(0).kill()
@@ -338,8 +363,8 @@ anim =  gsap.fromTo(marqueeInnerOne.children,{x:0},{x:distanceToTranslate,durati
 anim.progress(progress)
 
 }
-const marqueeInnerOne = document.querySelector(".marquee-inner-1") 
-const marqueeInnerTwo = document.querySelector(".marquee-inner-2") 
+const marqueeInnerOne = document.querySelector(".marquee-inner-1") as HTMLElement
+const marqueeInnerTwo = document.querySelector(".marquee-inner-2") as HTMLElement
 
 function playMarquee(){
 createMarqueeInstance(tween,marqueeInnerOne,-1,8)
@@ -350,12 +375,74 @@ createMarqueeInstance(tween,marqueeInnerOne,-1,8)
 window.addEventListener('resize',debounce(playMarquee))
 playMarquee()
 
-function debounce(func){
+function debounce(func:Function){
 let timer;
 return function(event){
 	if(timer) clearTimeout(timer);
 	timer = setTimeout(()=>{func()},200,event)
 }
 }
-	
+let loaderTl
+
+
+const controller = document.querySelector('.video-controls')
+const productVideo = document.querySelector('.product-video') 
+const playIcon = document.querySelector('.play-icon') 
+const pauseIcon = document.querySelector('.pause-icon') 
+
+
+
+
+
+productVideo.addEventListener('canplay', () => {
+	console.log("loadedd locked");
+
+       startLoader()
+		   
+		   
+        });
+
+
+
+		function startLoader(){
+			if(loaderTl){
+				return
+			}
+			controller.style.opacity = "1"
+			let videoDuration  = productVideo.duration
+			loaderTl = gsap.timeline({repeat:-1,defaults:{duration:videoDuration,ease:"none"}})
+			loaderTl.to("#progress-circle",{strokeDashoffset:0})
+		}
+
+
+		
+
+		function handleControls(){
+			console.log("control clickde");
+			
+				if(!loaderTl){
+					return
+				}else{
+				if(loaderTl.paused()){
+					loaderTl.play()
+					productVideo.play()
+					playIcon.style.opacity="0"
+					pauseIcon.style.opacity="1"
+					
+				}else{
+					loaderTl.pause()
+					productVideo.pause()
+					playIcon.style.opacity="1"
+					pauseIcon.style.opacity="0"
+				}
+			}
+
+
+		}
+
+		controller.addEventListener("click",handleControls)
+	 
+
+
+
 </script>
