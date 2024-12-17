@@ -6,7 +6,7 @@ import Base from "../layout/Base.astro";
 
 <Base>
 <main class=" font-interTight ">
-	<div class="fixed opacity-0 transition-all bottom-4 right-4  w-20 h-20 video-controls cursor-pointer z-30">
+	<div class="fixed   bottom-4 right-4  w-20 h-20 video-controls cursor-pointer z-30">
 		<svg class=" opacity-0 absolute top-1/2 translate-y-[-50%] left-1/2 translate-x-[-50%] play-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="#ffff" d="M8 17.175V6.825q0-.425.3-.713t.7-.287q.125 0 .263.037t.262.113l8.15 5.175q.225.15.338.375t.112.475t-.112.475t-.338.375l-8.15 5.175q-.125.075-.262.113T9 18.175q-.4 0-.7-.288t-.3-.712"/></svg>
 
 		<svg class="opacity-100 absolute top-1/2 translate-y-[-50%] left-1/2 translate-x-[-50%] pause-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="#ffff" d="M14 18V6h3.5v12zm-7.5 0V6H10v12z"/></svg>
@@ -38,12 +38,12 @@ import Base from "../layout/Base.astro";
 	<div class="media-object  sticky top-0 h-screen w-full">
 		
 		<div class="w-full video-cover absolute inset-0 bg-black z-10 opacity-0 pointer-events-none"></div>
-		<video class="w-full h-full product-video absolute inset-0  object-cover" muted autoplay loop src="/bg-video/intro-video-new.mp4"></video>
+		<video class="w-full h-full product-video absolute inset-0  object-cover" muted autoplay loop  src="/bg-video/intro-video-new.mp4"></video>
 	</div>
 </div>
 </section>
 
-<section class="section-two w-full relative z-40 mt-32">
+<section class="section-two  w-full relative z-40 mt-32">
 	<div class="details flex flex-col gap-24 xs:gap-12 px-32 py-12 xs:px-12 ">
         <h2  class="detail detail-1 text-[50px] font-semibold text-white leading-tight xs:text-[25px]">
 			Geen weken wachten. Razendsnel in huis.
@@ -79,10 +79,12 @@ import Base from "../layout/Base.astro";
 					<!-- Additional required wrapper -->
 					<div class="swiper-wrapper h-full">
 					  <!-- Slides -->
-					  <div class="swiper-slide slide-1 h-full rounded-3xl overflow-hidden"><img class=" object-cover w-full h-full" src="/slides/two.avif" alt=""></div>
-					  <div class="swiper-slide slide-2 h-full rounded-3xl overflow-hidden"><img class="w-full h-full object-cover" src="/slides/one.avif" alt=""></div>
-					  <div class="swiper-slide slide-3 h-full rounded-3xl overflow-hidden"><img class="w-full h-full object-cover" src="/slides/three.avif" alt=""></div>
-					  <div class="swiper-slide slide-4 h-full rounded-3xl overflow-hidden"><img class="w-full h-full object-cover" src="/slides/four.avif" alt=""></div>
+					  <div class="swiper-slide slide-1 h-full rounded-3xl overflow-hidden relative">
+						<p class="slide-text font-interTight text-white absolute top-16 left-16 text-[45px] leading-tight font-bold drop-shadow-sm opacity-0">Place Holder <br> Text.</p>
+						<img class=" object-cover w-full h-full" src="/slides/two.avif" alt=""></div>
+					  <div class="swiper-slide slide-2 h-full rounded-3xl overflow-hidden"><p class="slide-text font-interTight text-white absolute top-16 left-16 text-[45px] leading-tight font-bold drop-shadow-sm opacity-0">Place Holder <br> Text.</p><img class="w-full h-full object-cover" src="/slides/one.avif" alt=""></div>
+					  <div class="swiper-slide slide-3 h-full rounded-3xl overflow-hidden"><p class="slide-text font-interTight text-white absolute top-16 left-16 text-[45px] leading-tight font-bold drop-shadow-sm opacity-0">Place Holder <br> Text.</p><img class="w-full h-full object-cover" src="/slides/three.avif" alt=""></div>
+					  <div class="swiper-slide slide-4 h-full rounded-3xl overflow-hidden"><p class="slide-text font-interTight text-white absolute top-16 left-16 text-[45px] leading-tight font-bold drop-shadow-sm opacity-0">Place Holder <br> Text.</p><img class="w-full h-full object-cover" src="/slides/four.avif" alt=""></div>
 					
 					</div>
 					<div class="swiper-button-prev absolute top-[50%] translate-y-[-50%] bg-slate-950 w-24 h-24 left-4 z-50  rounded-3xl"></div>
@@ -142,7 +144,7 @@ import Base from "../layout/Base.astro";
 	}
 	
 	.swiper{
-		scale:3
+		scale:2
 	}
 
 
@@ -160,6 +162,7 @@ import Base from "../layout/Base.astro";
 		stroke-dasharray: 100;
   stroke-dashoffset: 100;
   stroke-linecap: round;
+  transition: stroke-dashoffset 0.3s linear;
 	}
 </style>
 
@@ -172,7 +175,7 @@ import Base from "../layout/Base.astro";
 	// import function to register Swiper custom elements
     import { register, type SwiperContainer } from 'swiper/element/bundle';
 import type { SwiperModule } from 'swiper/types';
-import { tweened } from 'svelte/motion';
+
 
     // register Swiper custom elements
     register();
@@ -208,6 +211,7 @@ const swiper = new Swiper('.swiper', {
   slidesPerView: 1.5,
   loop: true,
   spaceBetween: 20,
+  allowTouchMove:false,
   navigation: {
     nextEl: ".swiper-button-next",
     prevEl: ".swiper-button-prev",
@@ -256,6 +260,10 @@ const swiper = new Swiper('.swiper', {
   },
 });
 
+
+console.log(swiper);
+
+
   
 
 
@@ -263,7 +271,7 @@ const swiper = new Swiper('.swiper', {
 	function setHeight(){
 	let sectionHeight = sectionOne.offsetHeight+sectionTwo.offsetHeight
      stickyWrapper.style.height=`${sectionHeight+200}px`
-	 sliderStickyWrapper.style.height = `${sectionHeight}px`
+	 sliderStickyWrapper.style.height = `${sectionHeight+800}px`
 	
 	
 	}
@@ -314,14 +322,14 @@ const swiper = new Swiper('.swiper', {
       })
 
 
-	  
+	  const viewportHeight = window.innerHeight;  
 
 	 gsap.to(".swiper",{scale:1,
 
 		scrollTrigger:{
 			trigger:".hero-bg-video",
-			start:"bottom 70%",
-            end:"bottom top",
+			start:"bottom top",
+            end:"+=800",
 			scrub:true,
 			toggleActions:'play none none reverse',
 		
@@ -382,25 +390,51 @@ return function(event){
 	timer = setTimeout(()=>{func()},200,event)
 }
 }
+
+
 let loaderTl
 
 
 const controller = document.querySelector('.video-controls')
-const productVideo = document.querySelector('.product-video') 
+const productVideo = document.querySelector('.product-video') as HTMLVideoElement 
 const playIcon = document.querySelector('.play-icon') 
 const pauseIcon = document.querySelector('.pause-icon') 
+const progressCircle = document.querySelector('#progress-circle') as HTMLOrSVGElement
 
 
+productVideo.addEventListener('timeupdate', () => {
+            // Calculate the current progress of the video (between 0 and 1)
+            let duration = productVideo.duration
+			let val = productVideo.currentTime/duration
+			let rounded = Number(val.toFixed(2))*100;
+			console.log(rounded);
+			progressCircle.style.strokeDashoffset = 100-rounded;
+			
+			
+			
+			
+            
+            
+        });
 
 
-
-productVideo.addEventListener('canplay', () => {
+productVideo.addEventListener('canplaythrough', () => {
+	
 	console.log("loadedd locked");
 
-       startLoader()
+      //  startLoader()
 		   
 		   
         });
+
+	productVideo.addEventListener("ended",()=>{
+		
+	//	if(loaderTl){
+//
+	//		loaderTl.restart()
+	//	}
+		
+	})	
 
 
 
@@ -408,7 +442,7 @@ productVideo.addEventListener('canplay', () => {
 			if(loaderTl){
 				return
 			}
-			controller.style.opacity = "1"
+			
 			let videoDuration  = productVideo.duration
 			loaderTl = gsap.timeline({repeat:-1,defaults:{duration:videoDuration,ease:"none"}})
 			loaderTl.to("#progress-circle",{strokeDashoffset:0})
@@ -418,30 +452,42 @@ productVideo.addEventListener('canplay', () => {
 		
 
 		function handleControls(){
-			console.log("control clickde");
 			
-				if(!loaderTl){
-					return
-				}else{
-				if(loaderTl.paused()){
-					loaderTl.play()
+			
+				
+				if(productVideo.paused){
+					
 					productVideo.play()
 					playIcon.style.opacity="0"
 					pauseIcon.style.opacity="1"
 					
 				}else{
-					loaderTl.pause()
+					
 					productVideo.pause()
 					playIcon.style.opacity="1"
 					pauseIcon.style.opacity="0"
 				}
-			}
+			
 
 
 		}
 
 		controller.addEventListener("click",handleControls)
+
+		gsap.to(controller,{opacity:0,duration:0.3,scrollTrigger:{
+			trigger:'.section-two',
+			start:'top 30%',
+			toggleActions:'play none none reverse',
+
+		}})
 	 
+
+		gsap.to(".slide-text",{opacity:1,scrollTrigger:{
+			trigger:".hero-bg-video",
+			start:"bottom top",
+			end:"+=800",
+			scrub:true
+		}})
 
 
 
