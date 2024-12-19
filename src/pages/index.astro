@@ -43,7 +43,7 @@ import Base from "../layout/Base.astro";
 </div>
 </section>
 
-<section class="section-two  w-full relative z-40 mt-32">
+<section class="section-two w-full relative z-40 mt-32">
 	<div class="details flex flex-col gap-24 xs:gap-12 px-32 py-12 xs:px-12 ">
         <h2  class="detail detail-1 text-[50px] font-semibold text-white leading-tight xs:text-[25px]">
 			Geen weken wachten. Razendsnel in huis.
@@ -95,8 +95,8 @@ import Base from "../layout/Base.astro";
 		</div>
 	</div>
 	<div class="marquee-wrapper w-full bg-neutral-800 py-4 flex flex-col gap-4 justify-center items-center">
-       <div class="marquee-inner-1 relative flex gap-3 overflow-hidden w-full">
-		 <div class="marquee-1 flex gap-3 justify-evenly items-center ">
+       <div class="marquee-inner-1 relative flex gap-12 overflow-hidden w-full">
+		 <div class="marquee-1 flex gap-12 justify-evenly items-center ">
 <div class="marquee-item"></div>
 <div class="marquee-item"></div>
 <div class="marquee-item"></div>
@@ -109,8 +109,8 @@ import Base from "../layout/Base.astro";
 
 		 </div>	
 	   </div>
-       <div class="marquee-inner-2 relative flex flex-row-reverse gap-3 overflow-hidden w-full">
-		 <div class="marquee-2 flex gap-3 justify-evenly items-center ">
+       <div class="marquee-inner-2 relative flex flex-row-reverse gap-12 overflow-hidden w-full">
+		 <div class="marquee-2 flex gap-12 justify-evenly items-center ">
 <div class="marquee-item"></div>
 <div class="marquee-item"></div>
 <div class="marquee-item"></div>
@@ -160,8 +160,10 @@ import Base from "../layout/Base.astro";
 
 	#progress-circle{
 		stroke-dasharray: 100;
-  stroke-dashoffset: 100;
+  stroke-dashoffset: 0;
   stroke-linecap: round;
+  transform-origin: center;
+  transform: rotate(-90deg);
   transition: stroke-dashoffset 0.3s linear;
 	}
 </style>
@@ -182,10 +184,7 @@ import type { SwiperModule } from 'swiper/types';
    
   	gsap.registerPlugin(ScrollTrigger)
 
-	document.addEventListener("click",(e)=>{
-		console.log(e.target);
-		
-	})
+
 	
 
 
@@ -210,7 +209,7 @@ const swiper = new Swiper('.swiper', {
   centeredSlides: true,
   slidesPerView: 1.5,
   loop: true,
-  spaceBetween: 20,
+  spaceBetween: 200,
   allowTouchMove:false,
   navigation: {
     nextEl: ".swiper-button-next",
@@ -253,7 +252,7 @@ const swiper = new Swiper('.swiper', {
 
 	  swiperTl.to(inactiveSlides,{opacity:1})
 
-      console.log("Initial inactive slides:", inactiveSlides);
+      
 
      
     },
@@ -261,7 +260,7 @@ const swiper = new Swiper('.swiper', {
 });
 
 
-console.log(swiper);
+
 
 
   
@@ -351,37 +350,93 @@ let tween:GSAPTween
 let tween_two:GSAPTween
 
 
-function createMarqueeInstance(anim:GSAPTween,marqueeinner:HTMLElement,direction:number,speed:number){
+function createMarqueeInstance(anim, marqueeinner, direction, speed) {
+    let progress = anim ? anim.progress() : 0
+    anim && anim.progress(0).kill()
+    const marqueeInnerOne = marqueeinner
 
-let progress = anim ? anim.progress() : 0
-anim && anim.progress(0).kill()
-const marqueeInnerOne = marqueeinner
+    const marqueeOne = marqueeInnerOne.children[0];
+    const marqueeOneClone = marqueeOne?.cloneNode(true)
+    marqueeInnerOne.append(marqueeOneClone)
 
-const marqueeOne = marqueeInnerOne.children[0];
-const marqueeOneClone  = marqueeOne?.cloneNode(true)
-marqueeInnerOne.append(marqueeOneClone)
+    const marqueeWidth = parseInt(getComputedStyle(marqueeOne).getPropertyValue("width"), 10)
+    const marqueeGap = parseInt(getComputedStyle(marqueeOne).getPropertyValue("column-gap"), 10)
 
-const marqueeWidth = parseInt(getComputedStyle(marqueeOne).getPropertyValue("width"),10)
-const marqueeGap = parseInt(getComputedStyle(marqueeOne).getPropertyValue("column-gap"),10)
+    const distanceToTranslate = direction * (marqueeWidth + marqueeGap)
 
-const distanceToTranslate = direction * (marqueeWidth+marqueeGap)
+    const newAnim = gsap.fromTo(marqueeInnerOne.children, { x: 0 }, { x: distanceToTranslate, duration: speed, ease: "none", repeat: -1 })
+    newAnim.progress(progress)
 
-
-anim =  gsap.fromTo(marqueeInnerOne.children,{x:0},{x:distanceToTranslate,duration:speed,ease:"none",repeat:-1})
-anim.progress(progress)
-
+    return newAnim
 }
+
+
+
+
 const marqueeInnerOne = document.querySelector(".marquee-inner-1") as HTMLElement
 const marqueeInnerTwo = document.querySelector(".marquee-inner-2") as HTMLElement
 
-function playMarquee(){
-createMarqueeInstance(tween,marqueeInnerOne,-1,8)
- createMarqueeInstance(tween_two,marqueeInnerTwo,1,8)
+
+
+
+function playMarquee() {
+  
+	
+    
+
+    tween = createMarqueeInstance(tween, marqueeInnerOne, -1, 8)
+    tween_two = createMarqueeInstance(tween_two, marqueeInnerTwo, 1, 8)
+    
 }
+
+
 
 
 window.addEventListener('resize',debounce(playMarquee))
 playMarquee()
+
+function timeScaler(target, gsapTween) {
+   
+    if (window.innerWidth > 650) {
+        const originalTimeScale = gsapTween ? gsapTween.timeScale() : 1;
+
+        target.addEventListener("mouseenter", function() {
+            if (gsapTween) {
+                gsapTween.timeScale(0.3);
+            }
+        });
+
+        target.addEventListener("mouseleave", function() {
+            if (gsapTween) {
+                gsapTween.timeScale(originalTimeScale);
+            }
+        });
+    }
+}
+
+const marqueePause = document.querySelector(".pause-icon-marquee")
+const marqueePlay = document.querySelector(".play-icon-marquee")
+
+
+function pauseMarquee(){
+	if(tween.paused() && tween_two.paused()){
+		tween.play()
+		tween_two.play()
+		playIcon.style.opacity="0"
+		pauseIcon.style.opacity="1"
+	}else{
+		tween.pause()
+		tween_two.pause()
+		playIcon.style.opacity="1"
+		pauseIcon.style.opacity="0"
+	}
+}
+
+
+
+
+timeScaler(marqueeInnerOne,tween)
+timeScaler(marqueeInnerTwo,tween_two)
 
 function debounce(func:Function){
 let timer;
@@ -407,8 +462,9 @@ productVideo.addEventListener('timeupdate', () => {
             let duration = productVideo.duration
 			let val = productVideo.currentTime/duration
 			let rounded = Number(val.toFixed(2))*100;
-			console.log(rounded);
-			progressCircle.style.strokeDashoffset = 100-rounded;
+			
+			
+			 progressCircle.style.strokeDashoffset = rounded;
 			
 			
 			
@@ -418,23 +474,10 @@ productVideo.addEventListener('timeupdate', () => {
         });
 
 
-productVideo.addEventListener('canplaythrough', () => {
-	
-	console.log("loadedd locked");
-
-      //  startLoader()
-		   
-		   
-        });
-
-	productVideo.addEventListener("ended",()=>{
 		
-	//	if(loaderTl){
-//
-	//		loaderTl.restart()
-	//	}
-		
-	})	
+
+
+
 
 
 
