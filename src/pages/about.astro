@@ -37,8 +37,8 @@
             </div>
         </div>
     </div>
-    <div class="h-[2896px] anim-wrapper relative  bg-red-400">
-        <div class="sticky screen-wrapper top-0 h-screen w-full  p-32">
+    <div class="h-[1896px] anim-wrapper doom-block-section relative  bg-red-400">
+        <div class="sticky screen-wrapper doom-container top-0 h-screen w-full  p-32">
             <div class="z-20 relative ">
                 <p class="anim-text-1 text-[70px] font-semibold text-white drop-shadow-sm translate-y-[300px] opacity-0">Text-1</p>
                 <p class="anim-text-2 text-[70px] font-semibold text-white drop-shadow-sm absolute top-0 left-0 translate-y-[300px] opacity-0  ">Text-4 to the moon</p>
@@ -138,8 +138,14 @@ function initVideoControls(videoClass, playIconClass, pauseIconClass,icons_wrapp
 initVideoControls('.product-video', '.play-icon', '.pause-icon','.video-controls','#progress-circle');
 initVideoControls('.section-product-video', '.section-play-icon', '.section-pause-icon','.section-video-controls','#section-progress-circle');
 
+let screenWrapper = document.querySelector(".anim-wrapper")
+let scrollHeight = window.innerHeight*4;
+console.log(scrollHeight);
 
-let screenWrapper = document.querySelector(".screen-wrapper")
+screenWrapper.style.height = `${scrollHeight}px`
+
+
+
 
 
 let tl = gsap.timeline({scrollTrigger:{
