@@ -7,7 +7,8 @@ export default {
 				'xs': {'max': '620px'}
 			  },
 			fontFamily:{
-				interTight: ['InterTight', 'sans-serif'] 
+				interTight: ['InterTight', 'sans-serif'],
+				calSans: ['CalSans','sans-serif'] 
 			}
 		},
 	},

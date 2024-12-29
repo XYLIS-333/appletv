@@ -1,0 +1,140 @@
+---
+
+
+
+---
+
+
+
+<section class=" h-screen w-full bg-lime-200 flex justify-center items-center">
+  <h1 class=" text-left text-[80px]  font-interTight font-bold leading-[70px] text-neutral-950 tracking-tighter"> Foundations <br> Demyst. </h1>
+</section>
+<section class="h-screen w-full bg-neutral-900 relative overflow-hidden swiper-section">
+
+<div class=" swiper-scaler absolute left-[50%] top-[50%]  w-full overflow-hidden">
+  <div class="swiper relative">
+      <div class="swiper-wrapper">
+          <div class="swiper-slide swiper-slide-1  swiper-slide-style"><img class="swiper-slide-image" src="/public/slides/one.avif" ></div>
+          <div class="swiper-slide swiper-slide-2  swiper-slide-style"><img class="swiper-slide-image" src="/public/slides/two.avif" ></div>
+          <div class="swiper-slide swiper-slide-3  swiper-slide-style"><img class="swiper-slide-image" src="/public/slides/three.avif" ></div>
+          <div class="swiper-slide swiper-slide-4  swiper-slide-style"><img class="swiper-slide-image" src="/public/slides/four.avif" ></div>
+          <div class="swiper-slide swiper-slide-5  swiper-slide-style"><img class="swiper-slide-image" src="/public/slides/five.avif" ></div>
+      </div>
+      <div class="swiper-button-prev "></div>
+      <div class="swiper-button-next "></div>
+  
+  </div>
+</div>
+</section>
+<section class=" h-screen w-full bg-purple-100"></section>
+
+<style>
+
+
+
+.swiper-slide-style{
+  @apply h-[600px] w-[600px] overflow-hidden rounded-lg opacity-0
+}
+
+.swiper-slide-image{
+@apply w-full h-full object-cover 
+
+}
+
+.swiper-scaler{
+transform: translate(-50%,-50%) scale(2); 
+transform-origin: center;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: white; 
+  opacity: 0;
+  transform: scale(1.3);
+}
+
+.swiper-button-next{
+  right:40px
+}
+.swiper-button-prev{
+
+  left:40px
+}
+
+</style>
+
+<script>
+import Swiper from 'swiper';
+import 'swiper/css/navigation';
+
+	import 'swiper/css';
+  	import {gsap} from "gsap" 
+  	import { ScrollTrigger } from 'gsap/ScrollTrigger';
+    import { register, type SwiperContainer } from 'swiper/element/bundle';
+    
+
+    register();
+   
+  	gsap.registerPlugin(ScrollTrigger)
+
+
+
+let swiper = new Swiper('.swiper',{
+  spaceBetween:20,
+  slidesPerView:1.5,
+  centeredSlides:true,
+  loop:true,
+  allowTouchMove:false,
+  navigation: {
+    nextEl: '.swiper-button-next',
+    prevEl: '.swiper-button-prev',
+  },
+})
+
+function setupAnims(){
+
+  let tlScale:GSAPTimeline = gsap.timeline({ scrollTrigger:{
+  trigger:'.swiper-section',
+  start: 'top 80%',
+  end: 'top top',
+  scrub:true
+}})
+.to('.swiper-scaler',{scale:1})
+
+
+
+gsap.to(".swiper-button-prev,.swiper-button-next",{opacity:1,scale:1,duration:0.5,scrollTrigger:{
+  trigger:'.swiper-section',
+  start:'top 5%',
+  toggleActions:'play none none reverse'
+
+}})
+
+let tlOpacity = gsap.timeline({scrollTrigger:{
+  trigger:'.swiper-section',
+  start:'top 50%',
+  end: 'top top',
+  scrub:true
+}})
+.to('.swiper-slide',{opacity:1})
+
+}
+
+setupAnims()
+
+
+
+swiper.navigation.nextEl.addEventListener("click",function(){
+  console.log(document.querySelector(".swiper-slide-next"))
+  console.log(document.querySelector(".swiper-slide-prev"))
+})
+
+swiper.navigation.prevEl.addEventListener("click",function(){
+  console.log(document.querySelector(".swiper-slide-next"))
+  console.log(document.querySelector(".swiper-slide-prev"))
+})
+
+
+
+
+</script>

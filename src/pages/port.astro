@@ -207,25 +207,25 @@ tl.to('.anim-text-4',{y:0,opacity:1})
 tl.to('.anim-text-4',{y:-100,opacity:0})
 
 
-const myDiv = document.querySelector(".my-div")
+
 let root = document.documentElement
 
 function setHeight(){
 
-let navbar = document.querySelector(".nav-bar")
+let navbar = document.querySelector(".desktop-navbar-wrapper")
 
 let height = navbar.offsetHeight
 console.log(height);
 
 
-root.style.setProperty('--navbar-size',`${height}px`)
+root.style.setProperty('--global-navbar-height',`${height}px`)
 
 }
 
 setHeight()
 
 
-function debounce(func:Function){
+function debounce(func){
 let timer;
 return function(event){
 	if(timer) clearTimeout(timer);
@@ -261,14 +261,14 @@ console.log(scrollState.dy);
 
 if(scrollState.y>window.innerHeight/2){
         if (scrollState.dy < 0) {
-           //  myDiv.style.transform = 'translateY(0)';
-            root.style.setProperty('--navbar-hidden',`0`)
-           console.log(root.style.getPropertyValue('--navbar-size'));
+           
+            root.style.setProperty('--global-navbar-visibility',`0`)
+           console.log(root.style.getPropertyValue('--global-navbar-height'));
             
             }else {
-            // myDiv.style.transform = 'translateY(-100%)';
-            root.style.setProperty('--navbar-hidden',`1`)
-            console.log(root.style.getPropertyValue('--navbar-size'));
+            
+            root.style.setProperty('--global-navbar-visibility',`1`)
+            console.log(root.style.getPropertyValue('--global-navbar-height'));
         
            }
 
