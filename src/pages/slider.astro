@@ -33,7 +33,7 @@
 
 
 .swiper-slide-style{
-  @apply h-[600px] w-[600px] overflow-hidden rounded-lg opacity-0
+  @apply h-[600px] w-[600px] overflow-hidden rounded-lg 
 }
 
 .swiper-slide-image{
@@ -64,6 +64,7 @@ transform-origin: center;
 </style>
 
 <script>
+  //@ts-nocheck
 import Swiper from 'swiper';
 import 'swiper/css/navigation';
 
@@ -110,31 +111,105 @@ gsap.to(".swiper-button-prev,.swiper-button-next",{opacity:1,scale:1,duration:0.
 
 }})
 
-let tlOpacity = gsap.timeline({scrollTrigger:{
-  trigger:'.swiper-section',
-  start:'top 50%',
-  end: 'top top',
-  scrub:true
-}})
-.to('.swiper-slide',{opacity:1})
+ 
 
 }
 
 setupAnims()
 
 
+const state = {
+  timeline: null,
+  currentSlides: {
+  next: null,
+  prev: null
+  }
+};
+
+function getAdjacentSlides() {
+  return {
+    next: document.querySelector(".swiper-slide-next"),
+    prev: document.querySelector(".swiper-slide-prev")
+  };
+}
+
+function createTimeline(slides) {
+ 
+  const previousProgress = state.timeline ? state.timeline.progress() : 0;
+
+  
+  if (state.timeline) {
+    state.timeline.kill();
+  }
+
+
+ 
+
+  
+  state.timeline = gsap.timeline({
+    scrollTrigger: {
+      trigger: '.swiper-section',
+      start: 'top 20%',
+      toggleActions: 'play none none reverse'
+    }
+  });
+
+
+  state.timeline.fromTo([slides.next, slides.prev], 
+   {
+     opacity: 0
+   },
+   {
+     opacity: 1,
+     duration: 1,
+     ease: "power2.out"
+   }
+ );
+
+
+  console.log(state.timeline.getChildren()[0].targets());
+  
+
+  
+  if (previousProgress === 1) {
+    state.timeline.progress(1);
+  }
+  
+
+  
+  state.currentSlides = slides;
+  console.log("slides updated");
+  
+
+  return state.timeline;
+}
+
+
+
+
+
+function initAnimation() {
+  const slides = getAdjacentSlides();
+  createTimeline(slides);
+}
+
+
+function updateSlides() {
+  const slides = getAdjacentSlides();
+  createTimeline(slides);
+}
+
+
+initAnimation();
+
 
 swiper.navigation.nextEl.addEventListener("click",function(){
-  console.log(document.querySelector(".swiper-slide-next"))
-  console.log(document.querySelector(".swiper-slide-prev"))
+  updateSlides()
 })
 
 swiper.navigation.prevEl.addEventListener("click",function(){
-  console.log(document.querySelector(".swiper-slide-next"))
-  console.log(document.querySelector(".swiper-slide-prev"))
+ updateSlides()
 })
-
-
 
 
 </script>
