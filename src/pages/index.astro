@@ -101,8 +101,8 @@ import Base from "../layout/Base.astro";
 					</div>
 					
 					</div>
-					<div class="swiper-button-prev absolute top-[50%] translate-y-[-50%] bg-slate-950 w-24 h-24 left-4 z-50  rounded-3xl"></div>
-                    <div class="swiper-button-next absolute top-[50%] translate-y-[-50%] bg-slate-950 w-24 h-24 right-4 z-50 rounded-3xl"></div>
+					<div class="swiper-button-prev absolute top-[50%] translate-y-[-50%] bg-white w-24 h-24 left-4 z-50  rounded-3xl"></div>
+                    <div class="swiper-button-next absolute top-[50%] translate-y-[-50%] bg-white w-24 h-24 right-4 z-50 rounded-3xl"></div>
 				</div>
 			</div>
 
@@ -181,12 +181,12 @@ import Base from "../layout/Base.astro";
 	
 	.swiper-button-prev{
 		opacity:0;
-		color: white;
+		
 		
 	}
 	.swiper-button-next{
 		opacity:0;
-		color: white;
+		
 		
 	}
 
@@ -241,7 +241,7 @@ const swiper = new Swiper('.swiper', {
   centeredSlides: true,
   slidesPerView: 1.5,
   loop: true,
-  spaceBetween: 70,
+  spaceBetween: 15,
   allowTouchMove:false,
   navigation: {
     nextEl: ".swiper-button-next",
